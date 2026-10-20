@@ -36,7 +36,7 @@ h1{margin:0;font-size:28px;font-weight:700;line-height:1.1}
 .tab[aria-pressed=true]{color:var(--ink);border-color:var(--ink);font-weight:600}
 select{min-height:44px;margin-left:auto;padding:0 8px;font:inherit;font-size:14px;border:1.5px solid var(--line);border-radius:8px;background:var(--sf);color:inherit}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;padding:8px 16px 16px}
-.cell{--tc:#9a9a78;--tc2:var(--tc);display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:152px;padding:10px;font:inherit;color:#fff;text-align:left;border:0;border-radius:14px;cursor:pointer;background:linear-gradient(165deg,#0b1210 0%,color-mix(in srgb,var(--tc) 38%,#0b1210) 68%,color-mix(in srgb,var(--tc2) 52%,#0b1210) 100%)}
+.cell{--tc:#9a9a78;--tc2:var(--tc);display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:180px;padding:7px 8px 10px;font:inherit;color:#fff;text-align:left;border:4px solid transparent;border-radius:16px;cursor:pointer;background:linear-gradient(165deg,#0b1210 0%,color-mix(in srgb,var(--tc) 38%,#0b1210) 68%,color-mix(in srgb,var(--tc2) 52%,#0b1210) 100%) padding-box,linear-gradient(160deg,var(--tc),var(--tc2)) border-box}
 .cell .no,.cell .tys{color:rgba(255,255,255,.82)}
 .cell .st.v{border-color:rgba(255,255,255,.85)}
 .cell .slot{border-color:rgba(255,255,255,.55);color:rgba(255,255,255,.8)}
@@ -48,8 +48,8 @@ select{min-height:44px;margin-left:auto;padding:0 8px;font:inherit;font-size:14p
 .st.c{background:var(--ac)}
 .st.v{border:2px solid var(--ink2)}
 .cell .slot{width:52px;height:52px;margin:2px auto;font-size:22px;border-width:1.5px}
-.cell.u{filter:saturate(.3) brightness(.85)}
-.cell.u:hover{filter:saturate(.6) brightness(1)}
+.cell.u .pic img{filter:grayscale(1) brightness(.35)}
+.cell.u b,.cell.u .tys{opacity:.75}
 .cell b{font-size:14px;font-weight:600;line-height:1.2}
 .tys{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:var(--ink2)}
 .cell .tys{gap:2px 8px;font-size:11px}
@@ -64,15 +64,6 @@ select{min-height:44px;margin-left:auto;padding:0 8px;font:inherit;font-size:14p
 .btn.pri[aria-pressed=true]{background:none;border-color:var(--ink);color:var(--ink)}
 .plate{touch-action:pan-y;position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;overflow:auto;background:var(--sf);transform:translateY(100%);visibility:hidden;transition:transform .26s cubic-bezier(.2,.8,.2,1),visibility 0s .26s}
 .plate.open{transform:none;visibility:visible;transition:transform .26s cubic-bezier(.2,.8,.2,1)}
-.pin{display:flex;justify-content:space-between;align-items:center;padding:calc(env(safe-area-inset-top,0px) + 4px) 8px 0}
-.pin span{display:flex;margin-left:auto}
-.back,.ar{min-height:44px;min-width:44px;padding:0 12px;font:inherit;font-weight:600;font-size:18px;border:0;background:none;color:var(--ink);cursor:pointer}
-.back{font-size:16px}
-.hero{--tc:#9a9a78;--tc2:var(--tc);color:#fff;background:linear-gradient(165deg,#0b1210 0%,color-mix(in srgb,var(--tc) 45%,#0b1210) 70%,color-mix(in srgb,var(--tc2) 60%,#0b1210) 100%)}
-.hero .back,.hero .ar{color:#fff}
-.hero .big{color:rgba(255,255,255,.12)}
-.hero .slot{border-color:rgba(255,255,255,.6);color:rgba(255,255,255,.85)}
-.spec{position:relative;display:grid;place-items:center;height:230px;overflow:hidden}
 .big{position:absolute;font-size:clamp(120px,38vw,200px);font-weight:700;line-height:1;letter-spacing:-.04em;color:var(--line);user-select:none}
 .slot{position:relative;display:grid;place-items:center;width:132px;height:132px;box-sizing:border-box;border:2px dashed var(--ink2);border-radius:50%;font-size:56px;font-weight:700;color:var(--ink2)}
 .pc{box-sizing:border-box;width:100%;max-width:560px;margin:0 auto;padding:8px 20px 24px}
@@ -84,17 +75,15 @@ h2{margin:2px 0 8px;font-size:36px;line-height:1.1;font-weight:700}
 .app{grid-template-columns:minmax(440px,580px) 1fr}
 .idx{max-width:none;margin:0;border-right:1px solid var(--line)}
 .plate{position:sticky;top:0;height:100vh;transform:none;visibility:visible;transition:none}
-.back{display:none}.spec{height:300px}}
+.ab .x{display:none}}
 @media(prefers-reduced-motion:reduce){.plate,.plate.open{transition:none}.sk{animation:none}}
 
 .pic{position:relative;display:block;flex:none}
 .pic img{display:block;width:100%;height:100%;object-fit:contain}
 .cell .pic{width:72px;height:72px;margin:2px auto}
 .cell .pic img{image-rendering:pixelated}
-.spec .pic{width:200px;height:200px}
 .pic.fb{display:grid;place-items:center;box-sizing:border-box;border:2px dashed rgba(255,255,255,.55);border-radius:50%;color:rgba(255,255,255,.85)}
 .pic.fb::after{content:attr(data-l);font-size:26px;font-weight:700}
-.spec .pic.fb::after{font-size:56px}
 .gen{margin:16px 0 0;font-size:15px;font-weight:600}
 .lb{margin:22px 0 8px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink2)}
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
@@ -107,6 +96,44 @@ h2{margin:2px 0 8px;font-size:36px;line-height:1.1;font-weight:700}
 .bar u{display:block;height:100%;background:var(--ac);text-decoration:none}
 .evs{display:flex;flex-wrap:wrap;gap:8px}
 .btn.ev{min-height:44px;font-size:14px}
+
+/* ===== Carcasa tipo Pokédex ===== */
+.lens{display:inline-block;flex:none;width:44px;height:44px;box-sizing:border-box;border-radius:50%;border:3px solid #111;background:radial-gradient(circle at 35% 30%,#d9fbff,#27c8f0 55%,#0a8fc4);box-shadow:0 0 10px rgba(39,200,240,.65),inset 0 0 0 2px rgba(255,255,255,.35)}
+.hl{display:flex;align-items:center;gap:6px}
+.hl .lens{width:16px;height:16px;border-width:2px;box-shadow:0 0 5px rgba(39,200,240,.7)}
+.hl .no{color:#fff}
+.mscr{display:grid;place-items:center;align-self:stretch;height:84px;box-sizing:border-box;margin:5px 0 2px;background:color-mix(in srgb,var(--tc) 12%,#fff);border:3px solid #262626;border-radius:8px;box-shadow:inset 0 0 0 2px #fff}
+.cell .mscr .pic{margin:0;width:68px;height:68px}
+.pic.fb{border-color:rgba(0,0,0,.35);color:rgba(0,0,0,.55)}
+.dex{--sh1:var(--tc);--sh2:var(--tc2);width:calc(100% - 24px);max-width:520px;box-sizing:border-box;margin:calc(env(safe-area-inset-top,0px) + 10px) auto 18px;padding-bottom:12px;color:#fff;border:3px solid color-mix(in srgb,var(--tc) 35%,#000);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.2),transparent 28%),linear-gradient(165deg,var(--sh1),var(--sh2));box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.dtop{display:flex;align-items:center;gap:8px;padding:14px 16px 12px;border-bottom:3px solid color-mix(in srgb,var(--tc) 35%,#000);margin-bottom:14px}
+.dot{width:11px;height:11px;border-radius:50%;border:2px solid #111;box-sizing:border-box}
+.dot.r{background:#e8423c}.dot.y{background:#f1c40f}.dot.g{background:#3fc05a}
+.pball{position:relative;margin-left:auto;width:38px;height:38px;box-sizing:border-box;border:3px solid #111;border-radius:50%;background:linear-gradient(#f3f3f3 0 46%,#111 46% 54%,#fff 54%)}
+.pball::after{content:"";position:absolute;inset:50% auto auto 50%;width:12px;height:12px;margin:-6px 0 0 -6px;box-sizing:border-box;border:2px solid #111;border-radius:50%;background:#fff}
+.scr{position:relative;display:grid;place-items:center;overflow:hidden;aspect-ratio:5/4;margin:0 14px;background:color-mix(in srgb,var(--tc) 12%,#fff);border:4px solid #262626;border-radius:8px;box-shadow:inset 0 0 0 2px #fff}
+.scr .big{color:color-mix(in srgb,var(--tc) 24%,#fff)}
+.scr .pic{width:min(76%,300px);height:auto;aspect-ratio:1}
+.dbot{margin:14px 14px 0;padding:10px;background:#5f5f5f;border:3px solid #111;border-radius:18px}
+.strip{height:16px;margin-bottom:10px;background:#8dc63f;border:2px solid #111;border-radius:10px}
+.ctl{display:flex;align-items:center;gap:10px}
+.dpad{display:grid;grid-template:repeat(3,40px)/repeat(3,40px);flex:none}
+.dpad button{position:relative;padding:0;border:0;background:#3a3a3a;cursor:pointer}
+.dpad button::before{content:"";position:absolute;inset:50% auto auto 50%;margin:-6px 0 0 -6px;border:6px solid transparent}
+.dpad .u{grid-area:1/2;border-radius:6px 6px 0 0}.dpad .l{grid-area:2/1;border-radius:6px 0 0 6px}
+.dpad .r{grid-area:2/3;border-radius:0 6px 6px 0}.dpad .d{grid-area:3/2;border-radius:0 0 6px 6px}
+.dpad .m{grid-area:2/2;background:#3a3a3a}
+.dpad .u::before{border-bottom-color:#8a8a8a;margin-top:-9px}.dpad .d::before{border-top-color:#8a8a8a;margin-top:-3px}
+.dpad .l::before{border-right-color:#8a8a8a;margin-left:-9px}.dpad .r::before{border-left-color:#8a8a8a;margin-left:-3px}
+.dpad button:active{background:#555}
+.lcd{flex:1;min-width:0;min-height:104px;box-sizing:border-box;padding:8px 10px;display:flex;flex-direction:column;justify-content:center;gap:2px;background:#8dc63f;color:#1f3008;border:3px solid #2b3d12;border-radius:5px;box-shadow:inset 0 0 8px rgba(0,0,0,.25);font-family:ui-monospace,Menlo,Consolas,monospace}
+.lcd b{font-size:15px;line-height:1.15;overflow-wrap:anywhere}
+.lcd span{font-size:12px}
+.ab{display:flex;flex-direction:column;gap:12px}
+.ab button{width:40px;height:40px;padding:0;border-radius:50%;border:3px solid #111;font-family:inherit;font-weight:700;font-size:18px;line-height:1;cursor:pointer;color:#fff}
+.ab .x{background:#e8423c}.ab .dok{background:#3fa34d}
+.ab .dok[aria-pressed=true]{box-shadow:0 0 0 3px #fff,0 0 12px #7dff8f}
+.ab button:active{filter:brightness(.8)}
 </style>
 </head>
 <body>
@@ -156,7 +183,7 @@ const tags=ts=>ts.map(t=>`<span class="ty"><i class="sw" style="background:${T[t
 const seen=()=>new Set([...S.v,...S.c]);
 const cnt=()=>{$('#cnt').innerHTML=S.all.length?`Vistos ${seen().size} de ${S.all.length}<br>Capturados ${S.c.size}`:''};
 const pic=(src,p,cls)=>`<span class="${cls}${src?'':' fb'}" data-l="${esc(p.name[0])}">${src?`<img src="${esc(src)}" alt="" decoding="async" onerror="this.parentNode.classList.add('fb');this.remove()">`:''}</span>`;
-const cell=p=>{const c=S.c.has(p.id),v=c||S.v.has(p.id);return `<button class="cell${v?'':' u'}${p.id===S.sel?' on':''}" data-id="${p.id}" style="--tc:${T[p.types[0]][1]};--tc2:${T[p.types[p.types.length-1]][1]}"><span class="top"><span class="no">${pad(p.id)}</span>${c?'<i class="st c" role="img" aria-label="Capturado"></i>':v?'<i class="st v" role="img" aria-label="Visto"></i>':''}</span>${pic(p.sprite||p.art,p,'pic')}<b>${p.name}</b><span class="tys">${tags(p.types)}</span></button>`};
+const cell=p=>{const c=S.c.has(p.id),v=c||S.v.has(p.id);return `<button class="cell${v?'':' u'}${p.id===S.sel?' on':''}" data-id="${p.id}" style="--tc:${T[p.types[0]][1]};--tc2:${T[p.types[p.types.length-1]][1]}"><span class="top"><span class="hl"><i class="lens"></i><span class="no">${pad(p.id)}</span></span>${c?'<i class="st c" role="img" aria-label="Capturado"></i>':v?'<i class="st v" role="img" aria-label="Visto"></i>':''}</span><span class="mscr">${pic(p.sprite||p.art,p,'pic')}</span><b>${p.name}</b><span class="tys">${tags(p.types)}</span></button>`};
 function renderGrid(){
   const L=$('#list');
   if(S.st==='load'){L.innerHTML='<div class="grid">'+'<div class="sk"></div>'.repeat(12)+'</div><p class="msg">Cargando Pokédex… la primera vez puede tardar hasta un minuto porque el servidor gratuito se está despertando.</p>';return}
@@ -197,8 +224,14 @@ function open(id,show=true){
   const p=S.all.find(x=>x.id===id);if(!p)return;
   S.sel=id;renderGrid();
   const P=$('#plate');
-  P.innerHTML=`<div class="hero" style="--tc:${T[p.types[0]][1]};--tc2:${T[p.types[p.types.length-1]][1]}"><div class="pin"><button class="back" data-a="close">‹ Índice</button><span><button class="ar" data-a="prev" aria-label="Anterior">←</button><button class="ar" data-a="next" aria-label="Siguiente">→</button></span></div>
-<div class="spec"><span class="big" aria-hidden="true">${pad(id)}</span>${pic(p.art||p.sprite,p,'pic')}</div></div>
+  P.innerHTML=`<div class="dex" style="--tc:${T[p.types[0]][1]};--tc2:${T[p.types[p.types.length-1]][1]}">
+<div class="dtop"><i class="lens"></i><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span class="pball"></span></div>
+<div class="scr"><span class="big" aria-hidden="true">${pad(id)}</span>${pic(p.art||p.sprite,p,'pic')}</div>
+<div class="dbot"><div class="strip"></div><div class="ctl">
+<div class="dpad"><button class="u" data-a="up" aria-label="Subir"></button><button class="l" data-a="prev" aria-label="Anterior"></button><i class="m"></i><button class="r" data-a="next" aria-label="Siguiente"></button><button class="d" data-a="down" aria-label="Bajar"></button></div>
+<div class="lcd"><b>${esc(p.name)}</b><span>Nº ${pad(id)}</span></div>
+<div class="ab"><button class="x" data-a="close" aria-label="Cerrar">✕</button><button class="dok" data-a="c" aria-label="Capturado" aria-pressed="${S.c.has(id)}">✓</button></div>
+</div></div></div>
 <div class="pc"><p class="nn">Nº ${pad(id)}</p><h2>${esc(p.name)}</h2><div class="tys">${tags(p.types)}</div><div id="dt"></div></div>
 <div class="act">${acts(id)}</div>`;
   P.scrollTop=0;if(show)P.classList.add('open');
@@ -208,7 +241,7 @@ function flip(k){
   const id=S.sel;if(k==='v'&&S.c.has(id))return;
   const s=k==='c'?S.c:S.v;s.has(id)?s.delete(id):s.add(id);
   if(k==='c'&&S.c.has(id))S.v.add(id);
-  save();$('.act').innerHTML=acts(id);renderGrid();cnt();
+  save();$('.act').innerHTML=acts(id);const ok=$('.dok');if(ok)ok.setAttribute('aria-pressed',S.c.has(id));renderGrid();cnt();
 }
 const step=d=>{const i=S.all.findIndex(p=>p.id===S.sel);open(S.all[(i+d+S.all.length)%S.all.length].id)};
 $('#list').addEventListener('click',e=>{const c=e.target.closest('.cell');if(c)open(+c.dataset.id)});
@@ -219,6 +252,7 @@ $('#plate').addEventListener('click',e=>{
   const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
   if(a==='close')$('#plate').classList.remove('open');
   else if(a==='prev')step(-1);else if(a==='next')step(1);
+  else if(a==='up')$('#plate').scrollBy({top:-180,behavior:'smooth'});else if(a==='down')$('#plate').scrollBy({top:180,behavior:'smooth'});
   else if(a==='go')open(+b.dataset.id);else if(a==='retry')loadDetail(S.sel);else flip(a);
 });
 addEventListener('keydown',e=>{
