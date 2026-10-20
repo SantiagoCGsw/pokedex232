@@ -46,7 +46,7 @@ Aplicación web progresiva (PWA) para consultar los 150 Pokémon de Kanto: busca
 ├── icon-192.png
 ├── icon-512.png
 ├── apple-touch-icon.png    # Icono para iOS
-└── LEEME.txt
+
 ```
 
 ## 🚀 Ejecutar en local
@@ -66,10 +66,6 @@ Luego abre `http://localhost:8000`.
 El sitio está publicado en Netlify. Para actualizarlo, sube los cambios al repositorio o arrastra de nuevo la carpeta a [Netlify Drop](https://app.netlify.com/drop).
 
 Cada vez que cambies archivos, sube el número de versión `V` en `sw.js` para que los dispositivos actualicen la caché.
-
-## 👤 Autor
-
-Santiago C. — [@SantiagoCGsw](https://github.com/SantiagoCGsw)
 
 ## 🙏 Créditos
 
