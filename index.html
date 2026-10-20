@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pokédex de Kanto</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e6ebe4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121a16" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pokédex">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600;700&family=Literata:wght@400&display=swap" rel="stylesheet" crossorigin>
+<style>
+:root{--bg:#e6ebe4;--sf:#f3f6f1;--ink:#1b2a24;--ink2:#46594f;--line:#c3cec3;--ac:#e3a400;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a16;--sf:#1a2420;--ink:#e4ece5;--ink2:#9db1a5;--line:#2c3a33;--ac:#f0b722;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a16;--sf:#1a2420;--ink:#e4ece5;--ink2:#9db1a5;--line:#2c3a33;--ac:#f0b722;color-scheme:dark}
+html{background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 "Familjen Grotesk","Avenir Next","Segoe UI",sans-serif}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+button:disabled{opacity:.45;cursor:default}
+.app{display:grid;grid-template-columns:1fr;min-height:100%}
+.idx{max-width:760px;width:100%;margin:0 auto}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;padding:20px 16px 10px}
+h1{margin:0;font-size:28px;font-weight:700;line-height:1.1}
+#cnt{font-size:13px;line-height:1.35;color:var(--ink2);text-align:right}
+#q{display:block;box-sizing:border-box;width:calc(100% - 32px);margin:0 16px;padding:12px 14px;font:inherit;border:1.5px solid var(--line);border-radius:8px;background:var(--sf);color:inherit}
+.row2{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:6px 16px 0 8px}
+.tabs{display:flex}
+.tab{min-height:44px;padding:0 10px;font:inherit;font-size:14px;border:0;border-bottom:2px solid transparent;background:none;color:var(--ink2);cursor:pointer}
+.tab[aria-pressed=true]{color:var(--ink);border-color:var(--ink);font-weight:600}
+select{min-height:44px;margin-left:auto;padding:0 8px;font:inherit;font-size:14px;border:1.5px solid var(--line);border-radius:8px;background:var(--sf);color:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;padding:8px 16px 16px}
+.cell{--tc:#9a9a78;--tc2:var(--tc);display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:152px;padding:10px;font:inherit;color:#fff;text-align:left;border:0;border-radius:14px;cursor:pointer;background:linear-gradient(165deg,#0b1210 0%,color-mix(in srgb,var(--tc) 38%,#0b1210) 68%,color-mix(in srgb,var(--tc2) 52%,#0b1210) 100%)}
+.cell .no,.cell .tys{color:rgba(255,255,255,.82)}
+.cell .st.v{border-color:rgba(255,255,255,.85)}
+.cell .slot{border-color:rgba(255,255,255,.55);color:rgba(255,255,255,.8)}
+.cell:hover{filter:brightness(1.14)}
+.cell.on{box-shadow:inset 0 0 0 2px rgba(255,255,255,.9)}
+.top{display:flex;justify-content:space-between;align-items:center;width:100%}
+.no{font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.st{width:11px;height:11px;box-sizing:border-box;border-radius:50%}
+.st.c{background:var(--ac)}
+.st.v{border:2px solid var(--ink2)}
+.cell .slot{width:52px;height:52px;margin:2px auto;font-size:22px;border-width:1.5px}
+.cell.u{filter:saturate(.3) brightness(.85)}
+.cell.u:hover{filter:saturate(.6) brightness(1)}
+.cell b{font-size:14px;font-weight:600;line-height:1.2}
+.tys{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:var(--ink2)}
+.cell .tys{gap:2px 8px;font-size:11px}
+.ty{display:inline-flex;align-items:center;gap:5px}
+.sw{display:inline-block;width:9px;height:9px;border-radius:2px}
+.sk{min-height:152px;border-radius:14px;background:var(--sf);animation:pl 1.1s infinite alternate}
+@keyframes pl{to{opacity:.35}}
+.msg{padding:40px 16px;color:var(--ink2)}
+.msg p{margin:0 0 14px;max-width:44ch}
+.btn{min-height:48px;padding:0 16px;font:inherit;font-weight:600;border:1.5px solid var(--ink);border-radius:8px;background:none;color:var(--ink);cursor:pointer}
+.btn.pri{background:var(--ac);border-color:var(--ac);color:#1b2a24}
+.btn.pri[aria-pressed=true]{background:none;border-color:var(--ink);color:var(--ink)}
+.plate{touch-action:pan-y;position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;overflow:auto;background:var(--sf);transform:translateY(100%);visibility:hidden;transition:transform .26s cubic-bezier(.2,.8,.2,1),visibility 0s .26s}
+.plate.open{transform:none;visibility:visible;transition:transform .26s cubic-bezier(.2,.8,.2,1)}
+.pin{display:flex;justify-content:space-between;align-items:center;padding:calc(env(safe-area-inset-top,0px) + 4px) 8px 0}
+.pin span{display:flex;margin-left:auto}
+.back,.ar{min-height:44px;min-width:44px;padding:0 12px;font:inherit;font-weight:600;font-size:18px;border:0;background:none;color:var(--ink);cursor:pointer}
+.back{font-size:16px}
+.hero{--tc:#9a9a78;--tc2:var(--tc);color:#fff;background:linear-gradient(165deg,#0b1210 0%,color-mix(in srgb,var(--tc) 45%,#0b1210) 70%,color-mix(in srgb,var(--tc2) 60%,#0b1210) 100%)}
+.hero .back,.hero .ar{color:#fff}
+.hero .big{color:rgba(255,255,255,.12)}
+.hero .slot{border-color:rgba(255,255,255,.6);color:rgba(255,255,255,.85)}
+.spec{position:relative;display:grid;place-items:center;height:230px;overflow:hidden}
+.big{position:absolute;font-size:clamp(120px,38vw,200px);font-weight:700;line-height:1;letter-spacing:-.04em;color:var(--line);user-select:none}
+.slot{position:relative;display:grid;place-items:center;width:132px;height:132px;box-sizing:border-box;border:2px dashed var(--ink2);border-radius:50%;font-size:56px;font-weight:700;color:var(--ink2)}
+.pc{box-sizing:border-box;width:100%;max-width:560px;margin:0 auto;padding:8px 20px 24px}
+.nn{margin:0;font-size:14px;color:var(--ink2);font-variant-numeric:tabular-nums}
+h2{margin:2px 0 8px;font-size:36px;line-height:1.1;font-weight:700}
+.ds{max-width:56ch;margin:20px 0 0;font:400 17px/1.55 Literata,Georgia,serif;color:var(--ink2)}
+.act{position:sticky;bottom:0;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto;padding:12px 20px calc(env(safe-area-inset-bottom,0px) + 12px);background:var(--sf);border-top:1px solid var(--line)}
+@media(min-width:900px){
+.app{grid-template-columns:minmax(440px,580px) 1fr}
+.idx{max-width:none;margin:0;border-right:1px solid var(--line)}
+.plate{position:sticky;top:0;height:100vh;transform:none;visibility:visible;transition:none}
+.back{display:none}.spec{height:300px}}
+@media(prefers-reduced-motion:reduce){.plate,.plate.open{transition:none}.sk{animation:none}}
+
+.pic{position:relative;display:block;flex:none}
+.pic img{display:block;width:100%;height:100%;object-fit:contain}
+.cell .pic{width:72px;height:72px;margin:2px auto}
+.cell .pic img{image-rendering:pixelated}
+.spec .pic{width:200px;height:200px}
+.pic.fb{display:grid;place-items:center;box-sizing:border-box;border:2px dashed rgba(255,255,255,.55);border-radius:50%;color:rgba(255,255,255,.85)}
+.pic.fb::after{content:attr(data-l);font-size:26px;font-weight:700}
+.spec .pic.fb::after{font-size:56px}
+.gen{margin:16px 0 0;font-size:15px;font-weight:600}
+.lb{margin:22px 0 8px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink2)}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.meta span{display:block;font-size:13px;color:var(--ink2)}
+.meta b{font-weight:600}
+.meta .wide{grid-column:1/-1}
+.sr{display:grid;grid-template-columns:84px 36px 1fr;align-items:center;gap:8px;margin:6px 0;font-size:14px}
+.sr b{font-variant-numeric:tabular-nums;text-align:right;font-weight:600}
+.bar{display:block;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar u{display:block;height:100%;background:var(--ac);text-decoration:none}
+.evs{display:flex;flex-wrap:wrap;gap:8px}
+.btn.ev{min-height:44px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="app">
+  <main class="idx">
+    <div class="hd"><h1>Pokédex de Kanto</h1><div id="cnt"></div></div>
+    <input id="q" type="search" placeholder="Buscar por nombre o número" aria-label="Buscar Pokémon" autocomplete="off">
+    <div class="row2"><div class="tabs" id="tabs"></div><select id="tf" aria-label="Filtrar por tipo"></select></div>
+    <div id="list"></div>
+  </main>
+  <section class="plate" id="plate" aria-label="Ficha del Pokémon"></section>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const T={g:['Planta','#5aa83a'],f:['Fuego','#e8742a'],w:['Agua','#4a7fe0'],n:['Normal','#9a9a78'],a:['Volador','#8a74e0'],b:['Bicho','#a6b91a'],p:['Veneno','#9b4a9a'],e:['Eléctrico','#e5b800'],r:['Roca','#a8932f'],d:['Tierra','#c9a44f'],h:['Fantasma','#6b4f92'],s:['Psíquico','#e84a7f'],i:['Hielo','#6bc4c0'],k:['Lucha','#b8322c'],t:['Acero','#9aa3b5'],c:['Siniestro','#705746'],z:['Dragón','#5a2fe0'],x:['Hada','#e58ab8']};
+const pad=n=>String(n).padStart(3,'0');
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const API='https://pokedex-backend-g1ql.onrender.com';
+const TY={grass:'g',fire:'f',water:'w',normal:'n',flying:'a',bug:'b',poison:'p',electric:'e',rock:'r',ground:'d',ghost:'h',psychic:'s',ice:'i',fighting:'k',steel:'t',dark:'c',dragon:'z',fairy:'x'};
+const NM={'nidoran-f':'Nidoran ♀','nidoran-m':'Nidoran ♂','mr-mime':'Mr. Mime','farfetchd':"Farfetch'd"};
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const nice=s=>String(s).split('-').map(cap).join(' ');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/* El backend gratuito se duerme: la primera petición puede tardar ~50 s, por eso hay timeout largo y reintentos. */
+async function jget(path,tries=3){
+  let err;
+  for(let i=0;i<tries;i++){
+    const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),65000);
+    try{
+      const r=await fetch(API+path,{signal:ctl.signal});clearTimeout(to);
+      if(r.status===404)return null;
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      return await r.json();
+    }catch(e){clearTimeout(to);err=e;if(i<tries-1)await wait(1500*(i+1))}
+  }
+  throw err;
+}
+const Api={async list(){
+  const pages=await Promise.all([0,100].map(o=>jget('/api/pokemon?limit=100&offset='+o)));
+  return pages.flatMap(p=>p?p.data:[]).map(p=>({id:p.id,nac:p.id,name:NM[p.name]||nice(p.name),types:(p.types&&p.types.length?p.types:['normal']).map(t=>TY[t]||'n'),sprite:p.sprite,art:p.artwork})).sort((a,b)=>a.id-b.id);
+},
+detail:id=>jget('/api/pokemon/'+id,2)};
+const load=k=>{try{return new Set(JSON.parse(localStorage.getItem(k)||'[]'))}catch{return new Set()}};
+const S={all:[],q:'',t:'',f:'all',sel:0,st:'load',v:load('kv'),c:load('kc')};
+const save=()=>{try{localStorage.setItem('kv',JSON.stringify([...S.v]));localStorage.setItem('kc',JSON.stringify([...S.c]))}catch{}};
+const tags=ts=>ts.map(t=>`<span class="ty"><i class="sw" style="background:${T[t][1]}"></i>${T[t][0]}</span>`).join('');
+const seen=()=>new Set([...S.v,...S.c]);
+const cnt=()=>{$('#cnt').innerHTML=S.all.length?`Vistos ${seen().size} de ${S.all.length}<br>Capturados ${S.c.size}`:''};
+const pic=(src,p,cls)=>`<span class="${cls}${src?'':' fb'}" data-l="${esc(p.name[0])}">${src?`<img src="${esc(src)}" alt="" decoding="async" onerror="this.parentNode.classList.add('fb');this.remove()">`:''}</span>`;
+const cell=p=>{const c=S.c.has(p.id),v=c||S.v.has(p.id);return `<button class="cell${v?'':' u'}${p.id===S.sel?' on':''}" data-id="${p.id}" style="--tc:${T[p.types[0]][1]};--tc2:${T[p.types[p.types.length-1]][1]}"><span class="top"><span class="no">${pad(p.id)}</span>${c?'<i class="st c" role="img" aria-label="Capturado"></i>':v?'<i class="st v" role="img" aria-label="Visto"></i>':''}</span>${pic(p.sprite||p.art,p,'pic')}<b>${p.name}</b><span class="tys">${tags(p.types)}</span></button>`};
+function renderGrid(){
+  const L=$('#list');
+  if(S.st==='load'){L.innerHTML='<div class="grid">'+'<div class="sk"></div>'.repeat(12)+'</div><p class="msg">Cargando Pokédex… la primera vez puede tardar hasta un minuto porque el servidor gratuito se está despertando.</p>';return}
+  if(S.st==='err'){L.innerHTML='<div class="msg"><p>No se pudo cargar la Pokédex. Revisa tu conexión e inténtalo de nuevo.</p><button class="btn" id="retry">Reintentar</button></div>';$('#retry').onclick=boot;return}
+  const q=S.q.trim().toLowerCase().replace('#','').replace(/^0+/,''),sn=seen();
+  const rows=S.all.filter(p=>(!q||p.name.toLowerCase().includes(q)||String(p.id)===q||String(p.nac)===q)&&(!S.t||p.types.includes(S.t))&&(S.f==='all'||(S.f==='c'?S.c.has(p.id):sn.has(p.id))));
+  L.innerHTML=rows.length?`<div class="grid">${rows.map(cell).join('')}</div>`:`<div class="msg"><p>${S.f==='c'?'Aún no has capturado ninguno. Abre una ficha y marca «Capturado».':S.f==='v'?'Aún no has visto ninguno. Abre una ficha y marca «Visto».':'Ningún Pokémon coincide con esos filtros.'}</p><button class="btn" id="clr">Ver todos</button></div>`;
+  const c=$('#clr');if(c)c.onclick=()=>{S.q='';S.t='';S.f='all';$('#q').value='';$('#tf').value='';tabs();renderGrid()};
+}
+const tabs=()=>{$('#tabs').innerHTML=[['all','Todos'],['v','Vistos'],['c','Capturados']].map(([k,n])=>`<button class="tab" data-f="${k}" aria-pressed="${S.f===k}">${n}</button>`).join('')};
+const acts=id=>{const c=S.c.has(id),v=S.v.has(id)||c;return `<button class="btn" data-a="v" ${c?'disabled':''} aria-pressed="${v}">${v?'Quitar de vistos':'Marcar como visto'}</button><button class="btn pri" data-a="c" aria-pressed="${c}">${c?'Quitar de capturados':'Marcar como capturado'}</button>`};
+const SN={hp:'PS',attack:'Ataque',defense:'Defensa',specialAttack:'At. esp.',specialDefense:'Def. esp.',speed:'Velocidad'};
+const D=new Map();
+const arr=x=>x?(Array.isArray(x)?x:[x]):[];
+const evo=(label,list)=>{list=arr(list).filter(e=>e&&typeof e==='object'&&S.all.some(p=>p.id===e.id));return list.length?`<p class="lb">${label}</p><div class="evs">${list.map(e=>`<button class="btn ev" data-a="go" data-id="${e.id}">${pad(e.id)} ${esc(NM[e.name]||nice(e.name))}</button>`).join('')}</div>`:''};
+function dtHTML(d){
+  const st=d.stats||{};
+  const bars=Object.keys(SN).filter(k=>k in st).map(k=>`<div class="sr"><span>${SN[k]}</span><b>${st[k]}</b><i class="bar"><u style="width:${Math.min(100,st[k]/1.8)}%"></u></i></div>`).join('');
+  const ab=arr(d.abilities).map(a=>esc(nice(a.name))+(a.isHidden?' (oculta)':'')).join(', ')||'—';
+  return `${d.genus?`<p class="gen">${esc(d.genus)}</p>`:''}${d.flavorText?`<p class="ds">${esc(String(d.flavorText).replace(/[\n\f\r]+/g,' '))}</p>`:''}
+<div class="meta"><div><span>Altura</span><b>${(d.height/10).toFixed(1)} m</b></div><div><span>Peso</span><b>${(d.weight/10).toFixed(1)} kg</b></div><div class="wide"><span>Habilidades</span><b>${ab}</b></div></div>
+${bars?`<p class="lb">Estadísticas base</p>${bars}`:''}${evo('Evoluciona de',d.evolvesFrom)}${evo('Evoluciona a',d.evolvesTo)}`;
+}
+async function loadDetail(id){
+  const box=$('#dt');if(!box)return;
+  if(D.has(id)){box.innerHTML=dtHTML(D.get(id));return}
+  box.innerHTML='<p class="ds">Cargando ficha…</p>';
+  try{
+    const d=await Api.detail(id);if(d)D.set(id,d);
+    if(S.sel!==id||!$('#dt'))return;
+    $('#dt').innerHTML=d?dtHTML(d):'<p class="ds">No se encontró información de este Pokémon.</p>';
+  }catch{
+    if(S.sel!==id||!$('#dt'))return;
+    $('#dt').innerHTML='<p class="ds">No se pudo cargar la ficha.</p><button class="btn" data-a="retry">Reintentar</button>';
+  }
+}
+function open(id,show=true){
+  const p=S.all.find(x=>x.id===id);if(!p)return;
+  S.sel=id;renderGrid();
+  const P=$('#plate');
+  P.innerHTML=`<div class="hero" style="--tc:${T[p.types[0]][1]};--tc2:${T[p.types[p.types.length-1]][1]}"><div class="pin"><button class="back" data-a="close">‹ Índice</button><span><button class="ar" data-a="prev" aria-label="Anterior">←</button><button class="ar" data-a="next" aria-label="Siguiente">→</button></span></div>
+<div class="spec"><span class="big" aria-hidden="true">${pad(id)}</span>${pic(p.art||p.sprite,p,'pic')}</div></div>
+<div class="pc"><p class="nn">Nº ${pad(id)}</p><h2>${esc(p.name)}</h2><div class="tys">${tags(p.types)}</div><div id="dt"></div></div>
+<div class="act">${acts(id)}</div>`;
+  P.scrollTop=0;if(show)P.classList.add('open');
+  loadDetail(id);
+}
+function flip(k){
+  const id=S.sel;if(k==='v'&&S.c.has(id))return;
+  const s=k==='c'?S.c:S.v;s.has(id)?s.delete(id):s.add(id);
+  if(k==='c'&&S.c.has(id))S.v.add(id);
+  save();$('.act').innerHTML=acts(id);renderGrid();cnt();
+}
+const step=d=>{const i=S.all.findIndex(p=>p.id===S.sel);open(S.all[(i+d+S.all.length)%S.all.length].id)};
+$('#list').addEventListener('click',e=>{const c=e.target.closest('.cell');if(c)open(+c.dataset.id)});
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;S.f=b.dataset.f;tabs();renderGrid()});
+$('#tf').addEventListener('change',e=>{S.t=e.target.value;renderGrid()});
+$('#q').addEventListener('input',e=>{S.q=e.target.value;renderGrid()});
+$('#plate').addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+  if(a==='close')$('#plate').classList.remove('open');
+  else if(a==='prev')step(-1);else if(a==='next')step(1);
+  else if(a==='go')open(+b.dataset.id);else if(a==='retry')loadDetail(S.sel);else flip(a);
+});
+addEventListener('keydown',e=>{
+  if(e.target.matches('input,select')||!S.sel)return;
+  if(e.key==='Escape')$('#plate').classList.remove('open');
+  else if(e.key==='ArrowLeft')step(-1);else if(e.key==='ArrowRight')step(1);
+});
+/* Deslizar en la ficha: izquierda = siguiente, derecha = anterior */
+(()=>{const P=$('#plate');let x0=0,y0=0,t0=0,on=false;
+P.addEventListener('touchstart',e=>{if(e.touches.length!==1){on=false;return}const t=e.touches[0];x0=t.clientX;y0=t.clientY;t0=Date.now();on=true},{passive:true});
+P.addEventListener('touchend',e=>{if(!on)return;on=false;const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;
+  if(Date.now()-t0>700||Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.5)return;
+  step(dx<0?1:-1)},{passive:true});
+P.addEventListener('touchcancel',()=>{on=false},{passive:true})})();
+async function boot(){
+  S.st='load';renderGrid();
+  try{S.all=await Api.list();S.st='ok'}catch{S.st='err'}
+  $('#tf').innerHTML='<option value="">Todos los tipos</option>'+Object.entries(T).map(([k,[n]])=>`<option value="${k}">${n}</option>`).join('');
+  tabs();renderGrid();cnt();
+  if(S.st==='ok'&&matchMedia('(min-width:900px)').matches)open(S.all[0].id,false);
+}
+boot();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
